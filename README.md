@@ -3,7 +3,7 @@ Dropwizard Hazelcast Session
 
 A Dropwizard bundle for providing clustered session replication using Hazelcast distributed maps.
 
-**Note** This jar has not yet been published to a public repository. Very much TODO.
+**Note** This jar has not yet been published to a public repository. TODO.
 
 
 Getting Started
@@ -11,7 +11,7 @@ Getting Started
 
 See the `example-app` module for a working example (more details below), but it comes down to this:
 
-  1. Add a `HazelcastSessionConfig` property to your application configuration:
+Add a `HazelcastSessionConfig` property to your application configuration:
 ```java
 public class MyAppConfiguration extends Configuration {
     @JsonProperty("hazelcastSessionConfig")
@@ -22,13 +22,13 @@ public class MyAppConfiguration extends Configuration {
     }
 }
 ```
-  2. Most of the configs are optional, but you might want to set these:
+Most of the configs are optional, but you might want to set these in your YML config file:
 ```yml
 hazelcastSessionConfig:
   sessionTimeoutSecs: 900
   cookieName: myapp-session
 ```
-  3. Add a `HazelcastSessionBundle` to your bootstrap during initialisation:
+Add a `HazelcastSessionBundle` to your bootstrap during initialisation:
 ```java
 public class DwHazelcastExampleApplication extends Application<DwHazelcastExampleConfiguration> {
     // ...
