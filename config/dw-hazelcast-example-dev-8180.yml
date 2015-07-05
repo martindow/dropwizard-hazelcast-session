@@ -6,7 +6,9 @@ server:
     - type: http
       port: 8181
 
-sessionTimeoutSecs: 10
+hazelcastSessionConfig:
+  sessionTimeoutSecs: 10
+  cookieName: example-session
 
 views:
   .ftl:

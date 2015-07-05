@@ -1,7 +1,6 @@
 package technology.zook.dropwizard.hazelcast.example.resources;
 
-import technology.zook.dropwizard.hazelcast.HazelcastSessionFilter;
-import technology.zook.dropwizard.hazelcast.Session;
+import technology.zook.dropwizard.hazelcast.session.Session;
 import technology.zook.dropwizard.hazelcast.example.views.IndexPageView;
 
 import javax.ws.rs.GET;
@@ -10,7 +9,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.Context;
-import java.util.Map;
 
 import static javax.ws.rs.core.MediaType.TEXT_HTML;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
@@ -19,10 +17,10 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
 @Produces(TEXT_HTML)
 public class DwHazelcastExampleViewsResource {
 
-    @Session
     @GET
-    public IndexPageView indexPage(@Context ContainerRequestContext requestContext, @QueryParam("name") String newName) {
-        Map<Object, Object> session = (Map<Object, Object>) requestContext.getProperty(HazelcastSessionFilter.SESSION_MAP_REQUEST_PROPERTY);
+    public IndexPageView indexPage(@Context ContainerRequestContext requestContext,
+                                   @QueryParam("name") String newName,
+                                   @Context Session session) {
         if (isNotBlank(newName)) {
             session.put("name", newName);
         }

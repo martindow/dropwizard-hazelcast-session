@@ -1,4 +1,4 @@
-package technology.zook.dropwizard.hazelcast;
+package technology.zook.dropwizard.hazelcast.session;
 
 
 import com.hazelcast.config.MapConfig;
@@ -11,7 +11,6 @@ import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.NewCookie;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 import static java.util.UUID.randomUUID;
@@ -24,52 +23,33 @@ public class HazelcastSessionFilter implements ContainerRequestFilter, Container
     public static final String NEW_SESSION_ID_SET_REQUEST_PROPERTY = "technology.zook.dropwizard.hazelcast.new-session-id-set";
     public static final String HAZELCAST_SESSIONS_MAP_KEY = "technology.zook.dropwizard.hazelcast.sessions";
 
-    private final String cookieName;
-    private final int cookieMaxAgeSecs;
-    private final String cookiePath;
-    private final String cookieDomain;
-    private final String cookieComment;
-    private final boolean cookieSecure;
-    private final boolean cookieHttpOnly;
     private final HazelcastInstance hazelcastInstance;
+    private final HazelcastSessionConfig config;
 
-    public HazelcastSessionFilter(HazelcastInstance hazelcastInstance,
-                                  String cookieName, int cookieMaxAgeSecs) {
-        this(hazelcastInstance, cookieName, cookieMaxAgeSecs, null, null, null, false, false);
-    }
-
-    public HazelcastSessionFilter(HazelcastInstance hazelcastInstance,
-                                  String cookieName, int cookieMaxAgeSecs, String cookiePath, String cookieDomain, String cookieComment,
-                                  boolean cookieSecure, boolean cookieHttpOnly) {
+    public HazelcastSessionFilter(HazelcastInstance hazelcastInstance, HazelcastSessionConfig config) {
         this.hazelcastInstance = hazelcastInstance;
-        this.cookieName = cookieName;
-        this.cookieMaxAgeSecs = cookieMaxAgeSecs;
-        this.cookiePath = cookiePath;
-        this.cookieDomain = cookieDomain;
-        this.cookieComment = cookieComment;
-        this.cookieSecure = cookieSecure;
-        this.cookieHttpOnly = cookieHttpOnly;
+        this.config = config;
         MapConfig sessionsMapConfig = hazelcastInstance.getConfig().getMapConfig(HAZELCAST_SESSIONS_MAP_KEY);
-        sessionsMapConfig.setMaxIdleSeconds(cookieMaxAgeSecs);
+        sessionsMapConfig.setMaxIdleSeconds(config.getSessionTimeoutSecs());
     }
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
         Map<Object, Object> allSessionsMap = hazelcastInstance.getMap(HAZELCAST_SESSIONS_MAP_KEY);
-        Map<Object, Object> thisSessionMap = null;
+        Session thisSessionMap = null;
 
         String sessionId = null;
-        Cookie sessionCookie = requestContext.getCookies().get(cookieName);
+        Cookie sessionCookie = requestContext.getCookies().get(config.getCookieName());
         if (sessionCookie != null) {
             sessionId = sessionCookie.getValue();
             if (isNotBlank(sessionId) && allSessionsMap.containsKey(sessionId)) {
-                thisSessionMap = (Map<Object, Object>) allSessionsMap.get(sessionId);
+                thisSessionMap = (Session) allSessionsMap.get(sessionId);
             }
         }
         if (thisSessionMap == null) {
             sessionId = randomUUID().toString();
             requestContext.setProperty(NEW_SESSION_ID_SET_REQUEST_PROPERTY, true);
-            thisSessionMap = new HashMap<>();
+            thisSessionMap = new Session();
             allSessionsMap.put(sessionId, thisSessionMap);
         }
 
@@ -81,8 +61,9 @@ public class HazelcastSessionFilter implements ContainerRequestFilter, Container
     public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws IOException {
         String sessionId = (String) requestContext.getProperty(SESSION_ID_REQUEST_PROPERTY);
         if (requestContext.getProperty(NEW_SESSION_ID_SET_REQUEST_PROPERTY) != null) {
-            NewCookie newSessionCookie = new NewCookie(cookieName, sessionId, cookieDomain, cookiePath, cookieComment,
-                    -1, cookieSecure, cookieHttpOnly);
+            // Note: cookie maxAge is -1 below: session timeout is handled with Hazelcast above: sessionsMapConfig.setMaxIdleSeconds(cookieMaxAgeSecs)
+            NewCookie newSessionCookie = new NewCookie(config.getCookieName(), sessionId, config.getCookieDomain(),
+                    config.getCookiePath(), config.getCookieComment(), -1, config.isCookieSecure(), config.isCookieHttpOnly());
             responseContext.getHeaders().add("Set-Cookie", newSessionCookie);
         }
         hazelcastInstance.getMap(HAZELCAST_SESSIONS_MAP_KEY).put(sessionId,
