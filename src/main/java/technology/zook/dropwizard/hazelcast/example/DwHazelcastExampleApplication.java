@@ -1,10 +1,13 @@
 package technology.zook.dropwizard.hazelcast.example;
 
 
+import com.hazelcast.core.Hazelcast;
+import com.hazelcast.core.HazelcastInstance;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
+import technology.zook.dropwizard.hazelcast.HazelcastSessionFeature;
 import technology.zook.dropwizard.hazelcast.example.config.DwHazelcastExampleConfiguration;
 import technology.zook.dropwizard.hazelcast.example.health.HazelcastHealthcheck;
 import technology.zook.dropwizard.hazelcast.example.resources.DwHazelcastExampleViewsResource;
@@ -33,9 +36,11 @@ public class DwHazelcastExampleApplication extends Application<DwHazelcastExampl
     }
 
     @Override
-    public void run(DwHazelcastExampleConfiguration dwHazelcastExampleConfiguration, Environment environment) throws Exception {
+    public void run(DwHazelcastExampleConfiguration config, Environment environment) throws Exception {
         environment.healthChecks().register("hazelcast-health", new HazelcastHealthcheck());
         environment.jersey().register(new DwHazelcastExampleViewsResource());
+        HazelcastInstance hazelcastInstance = Hazelcast.newHazelcastInstance();
+        environment.jersey().register(new HazelcastSessionFeature(hazelcastInstance, "dw-hc-session", config.getSessionTimeoutSecs()));
     }
 
 }

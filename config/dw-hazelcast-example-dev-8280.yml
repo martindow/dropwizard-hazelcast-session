@@ -1,0 +1,18 @@
+server:
+  applicationConnectors:
+    - type: http
+      port: 8280
+  adminConnectors:
+    - type: http
+      port: 8281
+
+sessionTimeoutSecs: 10
+
+views:
+  .ftl:
+    strict_syntax: yes
+
+logging:
+  level: INFO
+#  loggers:
+#    com.hazelcast: ALL
