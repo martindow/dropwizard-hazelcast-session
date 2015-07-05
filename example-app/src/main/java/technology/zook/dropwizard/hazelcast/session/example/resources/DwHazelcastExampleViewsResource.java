@@ -1,7 +1,7 @@
-package technology.zook.dropwizard.hazelcast.example.resources;
+package technology.zook.dropwizard.hazelcast.session.example.resources;
 
 import technology.zook.dropwizard.hazelcast.session.Session;
-import technology.zook.dropwizard.hazelcast.example.views.IndexPageView;
+import technology.zook.dropwizard.hazelcast.session.example.views.IndexPageView;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

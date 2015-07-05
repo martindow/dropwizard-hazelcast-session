@@ -1,4 +1,4 @@
-package technology.zook.dropwizard.hazelcast.example.views;
+package technology.zook.dropwizard.hazelcast.session.example.views;
 
 
 import io.dropwizard.views.View;

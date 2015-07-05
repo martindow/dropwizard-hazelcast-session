@@ -1,4 +1,4 @@
-package technology.zook.dropwizard.hazelcast.example.config;
+package technology.zook.dropwizard.hazelcast.session.example.config;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;

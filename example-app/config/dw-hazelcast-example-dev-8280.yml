@@ -1,10 +1,10 @@
 server:
   applicationConnectors:
     - type: http
-      port: 8180
+      port: 8280
   adminConnectors:
     - type: http
-      port: 8181
+      port: 8281
 
 hazelcastSessionConfig:
   sessionTimeoutSecs: 10
@@ -13,3 +13,8 @@ hazelcastSessionConfig:
 views:
   .ftl:
     strict_syntax: yes
+
+logging:
+  level: INFO
+  loggers:
+    com.hazelcast: INFO

@@ -1,4 +1,4 @@
-package technology.zook.dropwizard.hazelcast.example.health;
+package technology.zook.dropwizard.hazelcast.session.example.health;
 
 
 import com.codahale.metrics.health.HealthCheck;
