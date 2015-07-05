@@ -7,7 +7,7 @@ server:
       port: 8181
 
 hazelcastSessionConfig:
-  sessionTimeoutSecs: 10
+  sessionTimeoutSecs: 600
   cookieName: example-session
 
 views:
