@@ -59,7 +59,7 @@ Assuming you have a UNIX terminal with git and maven installed:
   5. `mvn package`
   6. `java -jar server config/dw-hazelcast-example-dev-8180.yml`
 
-Now visit http://localhost:8180/ and you should see "Hello, Somebody!". Wonderful. Now the "UI" is a bit basic, shall we say, because to you get your actual name into the session with another GET request and a query srting param: http://localhost:8180/?name=Martin. Now go back to http://localhost:8180/ and you'll be greeted with your actual name loaded from the actual session. Glorious.
+Now visit [http://localhost:8180/](http://localhost:8180/) and you should see "Hello, Somebody!". Wonderful. Now the "UI" is a bit basic, shall we say, because to you get your actual name into the session with another GET request and a query srting param: [http://localhost:8180/?name=Martin](http://localhost:8180/?name=Martin). Now go back to [http://localhost:8180/](http://localhost:8180/) and you'll be greeted with your actual name loaded from the actual session. Glorious.
 
 To really appreciate the magic, however, you need to start a second instance of the server on another port. When you do that Hazelcast will use spot the second instance over multicast and will casually create you a cluster of "Hello, Somebody!" services.
 
@@ -67,7 +67,7 @@ So open a second terminal window in the same directory:
   1. `cd dropwizard-hazelcast-session/example-app`
   2. `java -jar server config/dw-hazelcast-example-dev-8280.yml`
 
-Now visit that second web app in a browser: http://localhost:8280/ (note the different port). You should be greated with the name stored in the first web app instance, which Hazelcast has synched over seamlessly. Mess about with changing the name on one server and watching the session be replicated to the other server until you get bored.
+Now visit that second web app in a browser: [http://localhost:8280/](http://localhost:8280/) (note the different port). You should be greated with the name stored in the first web app instance, which Hazelcast has synched over seamlessly. Mess about with changing the name on one server and watching the session be replicated to the other server until you get bored.
 
 Next up, open `example-app/config/dw-hazelcast-example-dev-8180.yml` and `example-app/config/dw-hazelcast-example-dev-8280.yml` and change the value of `  sessionTimeoutSecs` to `10` (seconds). Restart both services. Now you'll see the session expire after 10 seconds.
 
