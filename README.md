@@ -22,12 +22,14 @@ public class MyAppConfiguration extends Configuration {
     }
 }
 ```
+
 Most of the configs are optional, but you might want to set these in your YML config file:
 ```yml
 hazelcastSessionConfig:
   sessionTimeoutSecs: 900
   cookieName: myapp-session
 ```
+
 Add a `HazelcastSessionBundle` to your bootstrap during initialisation:
 ```java
 public class DwHazelcastExampleApplication extends Application<DwHazelcastExampleConfiguration> {
@@ -43,6 +45,21 @@ public class DwHazelcastExampleApplication extends Application<DwHazelcastExampl
     }
     // ...
 }
+
+Add a `Session` parameter to resource method and annotate it with `@Context` to have the session injected:
+```java
+package my.package;
+import technology.zook.dropwizard.hazelcast.session.Session;
+// ...
+@Path("/")
+@Produces(MediaType.TEXT_PLAIN)
+public class MyResource {
+    @GET
+    public String getSomething(@Context Session session) {
+        return (String) session.get("thing");
+    }
+}
+```
 ```
 
 

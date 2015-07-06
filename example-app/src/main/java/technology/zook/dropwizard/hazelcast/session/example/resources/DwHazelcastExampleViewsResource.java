@@ -18,9 +18,7 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
 public class DwHazelcastExampleViewsResource {
 
     @GET
-    public IndexPageView indexPage(@Context ContainerRequestContext requestContext,
-                                   @QueryParam("name") String newName,
-                                   @Context Session session) {
+    public IndexPageView indexPage(@Context Session session, @QueryParam("name") String newName) {
         if (isNotBlank(newName)) {
             session.put("name", newName);
         }
