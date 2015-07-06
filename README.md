@@ -45,6 +45,7 @@ public class DwHazelcastExampleApplication extends Application<DwHazelcastExampl
     }
     // ...
 }
+```
 
 Add a `Session` parameter to resource method and annotate it with `@Context` to have the session injected:
 ```java
@@ -59,7 +60,6 @@ public class MyResource {
         return (String) session.get("thing");
     }
 }
-```
 ```
 
 
