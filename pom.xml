@@ -10,13 +10,22 @@
     <artifactId>dropwizard-hazelcast-session</artifactId>
     <version>1.0.0</version>
     <name>Dropwizard Hazelcast clustered session bundle.</name>
-    <description>A Dropwizard bundle for providing clustered session replication using Hazelcast distributed maps.</description>
+    <description>A Dropwizard bundle for providing clustered session replication using Hazelcast distributed maps.
+    </description>
     <developers>
         <developer>
             <id>martindow</id>
             <name>Martin Dow</name>
         </developer>
     </developers>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <url>https://github.com/martindow/dropwizard-hazelcast-session</url>
     <scm>
         <url>scm:git:git@github.com:martindow/dropwizard-hazelcast-session.git</url>
         <connection>scm:git:git@github.com:martindow/dropwizard-hazelcast-session.git</connection>
