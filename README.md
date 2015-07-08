@@ -3,7 +3,18 @@ Dropwizard Hazelcast Session
 
 A Dropwizard bundle for providing clustered session replication using Hazelcast distributed maps.
 
-**Note** This jar has not yet been published to a public repository. TODO.
+Maven
+-----
+
+Maven coordinates for the [https://repo1.maven.org/maven2/com/unicodecollective/dropwizard/dropwizard-hazelcast-session/1.0.0/](latest release) are:
+
+```xml
+<dependency>
+    <groupId>com.unicodecollective.dropwizard</groupId>
+    <artifactId>dropwizard-hazelcast-session</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
 
 
 Getting Started
