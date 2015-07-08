@@ -8,7 +8,7 @@
 
     <groupId>com.unicodecollective.dropwizard</groupId>
     <artifactId>dropwizard-hazelcast-session</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>Dropwizard Hazelcast clustered session bundle.</name>
     <description>A Dropwizard bundle for providing clustered session replication using Hazelcast distributed maps.</description>
     <developers>
