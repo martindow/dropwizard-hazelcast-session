@@ -1,15 +1,15 @@
-package technology.zook.dropwizard.hazelcast.session.example;
+package com.unicodecollective.dropwizard.hazelcast.session.example;
 
 
+import com.unicodecollective.dropwizard.hazelcast.session.example.config.DwHazelcastExampleConfiguration;
+import com.unicodecollective.dropwizard.hazelcast.session.example.health.HazelcastHealthcheck;
+import com.unicodecollective.dropwizard.hazelcast.session.example.resources.DwHazelcastExampleViewsResource;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
-import technology.zook.dropwizard.hazelcast.session.example.config.DwHazelcastExampleConfiguration;
-import technology.zook.dropwizard.hazelcast.session.example.health.HazelcastHealthcheck;
-import technology.zook.dropwizard.hazelcast.session.example.resources.DwHazelcastExampleViewsResource;
-import technology.zook.dropwizard.hazelcast.session.HazelcastSessionBundle;
-import technology.zook.dropwizard.hazelcast.session.HazelcastSessionConfig;
+import com.unicodecollective.dropwizard.hazelcast.session.HazelcastSessionBundle;
+import com.unicodecollective.dropwizard.hazelcast.session.HazelcastSessionConfig;
 
 import java.util.Map;
 

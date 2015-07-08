@@ -1,7 +1,7 @@
-package technology.zook.dropwizard.hazelcast.session.example.resources;
+package com.unicodecollective.dropwizard.hazelcast.session.example.resources;
 
-import technology.zook.dropwizard.hazelcast.session.Session;
-import technology.zook.dropwizard.hazelcast.session.example.views.IndexPageView;
+import com.unicodecollective.dropwizard.hazelcast.session.example.views.IndexPageView;
+import com.unicodecollective.dropwizard.hazelcast.session.Session;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;

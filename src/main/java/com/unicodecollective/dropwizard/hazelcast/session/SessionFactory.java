@@ -1,4 +1,4 @@
-package technology.zook.dropwizard.hazelcast.session;
+package com.unicodecollective.dropwizard.hazelcast.session;
 
 
 import org.glassfish.hk2.api.Factory;
