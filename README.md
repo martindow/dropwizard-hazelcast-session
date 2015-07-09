@@ -86,6 +86,7 @@ You session objects should be injected as fields into your Resource class using 
 
 There appears to be a problem with declaring your Jersey resource in Dropwizard as an instance like this:
 ```java
+// Don't do this:
 environment.jersey().register(new MyResourceClass());
 ```
 
