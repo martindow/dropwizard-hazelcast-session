@@ -6,13 +6,13 @@ A Dropwizard bundle for providing clustered session replication using Hazelcast 
 Maven
 -----
 
-Maven coordinates for the [latest release](https://repo1.maven.org/maven2/com/unicodecollective/dropwizard/dropwizard-hazelcast-session/1.0.0/) are:
+Maven coordinates for the [latest release](https://repo1.maven.org/maven2/com/unicodecollective/dropwizard/dropwizard-hazelcast-session/1.0.1/) are:
 
 ```xml
 <dependency>
     <groupId>com.unicodecollective.dropwizard</groupId>
     <artifactId>dropwizard-hazelcast-session</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
