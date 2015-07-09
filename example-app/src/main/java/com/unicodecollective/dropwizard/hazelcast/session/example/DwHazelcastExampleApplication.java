@@ -5,6 +5,7 @@ import com.unicodecollective.dropwizard.hazelcast.session.example.config.DwHazel
 import com.unicodecollective.dropwizard.hazelcast.session.example.health.HazelcastHealthcheck;
 import com.unicodecollective.dropwizard.hazelcast.session.example.resources.DwHazelcastExampleViewsResource;
 import io.dropwizard.Application;
+import io.dropwizard.jersey.DropwizardResourceConfig;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
@@ -43,8 +44,7 @@ public class DwHazelcastExampleApplication extends Application<DwHazelcastExampl
     @Override
     public void run(DwHazelcastExampleConfiguration config, Environment environment) throws Exception {
         environment.healthChecks().register("hazelcast-health", new HazelcastHealthcheck());
-        environment.jersey().register(new DwHazelcastExampleViewsResource());
-
+        environment.jersey().register(DwHazelcastExampleViewsResource.class);
     }
 
 }

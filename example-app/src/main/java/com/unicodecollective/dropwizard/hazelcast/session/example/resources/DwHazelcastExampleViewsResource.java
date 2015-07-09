@@ -1,10 +1,10 @@
 package com.unicodecollective.dropwizard.hazelcast.session.example.resources;
 
-import com.unicodecollective.dropwizard.hazelcast.session.example.views.IndexPageView;
 import com.unicodecollective.dropwizard.hazelcast.session.Session;
+import com.unicodecollective.dropwizard.hazelcast.session.example.MyAppSession;
+import com.unicodecollective.dropwizard.hazelcast.session.example.views.IndexPageView;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 
@@ -14,17 +14,18 @@ import static javax.ws.rs.core.MediaType.TEXT_HTML;
 @Produces(TEXT_HTML)
 public class DwHazelcastExampleViewsResource {
 
-    public static final String NAME_PARAM = "name";
+    @Session
+    private MyAppSession myAppSession;
 
     @GET
-    public IndexPageView indexPage(@Context Session session) {
-        return new IndexPageView(session.containsKey(NAME_PARAM) ? (String) session.get(NAME_PARAM) : "Somebody");
+    public IndexPageView indexPage() {
+        return new IndexPageView(myAppSession.getName());
     }
 
     @POST
     @Path("name")
-    public Response submitName(@Context Session session, @FormParam("name") String name) {
-        session.put(NAME_PARAM, name);
+    public Response submitName(@FormParam("name") String name) {
+        myAppSession.setName(name);
         return Response.seeOther(URI.create("/")).build();
     }
 

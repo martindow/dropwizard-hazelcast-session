@@ -7,8 +7,8 @@
     </prerequisites>
 
     <artifactId>dropwizard-hazelcast-session-example</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
-    <groupId>technology.zook.dropwizard.hazelcast</groupId>
+    <version>1.0.1-SNAPSHOT</version>
+    <groupId>com.unicodecollective.dropwizard</groupId>
     <name>Dropwizard Hazelcast clustered session bundle example application.</name>
 
     <properties>
@@ -21,9 +21,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>technology.zook.dropwizard.hazelcast</groupId>
+            <groupId>com.unicodecollective.dropwizard</groupId>
             <artifactId>dropwizard-hazelcast-session</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>io.dropwizard</groupId>

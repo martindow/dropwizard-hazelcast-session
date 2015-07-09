@@ -58,7 +58,7 @@ public class DwHazelcastExampleApplication extends Application<DwHazelcastExampl
 }
 ```
 
-Add a `Session` parameter to resource method and annotate it with `@Context` to have the session injected:
+Annotate the resource field with `@Session` to have the value injected from the Hazelcast-managed session:
 ```java
 package my.package;
 import technology.zook.dropwizard.hazelcast.session.Session;
@@ -66,12 +66,34 @@ import technology.zook.dropwizard.hazelcast.session.Session;
 @Path("/")
 @Produces(MediaType.TEXT_PLAIN)
 public class MyResource {
+
+    @Session
+    private String thingy;
+    
     @GET
-    public String getSomething(@Context Session session) {
-        return (String) session.get("thing");
+    public String getSomething() {
+        return thingy;
     }
 }
 ```
+
+**Note**
+
+You session objects should be injected as fields into your Resource class using the `@Session` annotation. There's currently a problem injecting them into request handler parameters.
+
+
+**Note**
+
+There appears to be a problem with declaring your Jersey resource in Dropwizard as an instance like this:
+```java
+environment.jersey().register(new MyResourceClass());
+```
+
+While we figure out the problem you should declare your resource like this:
+```java
+environment.jersey().register(MyResourceClass.class);
+```
+
 
 
 See it in action

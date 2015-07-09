@@ -6,7 +6,11 @@ import io.dropwizard.Configuration;
 import io.dropwizard.ConfiguredBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.glassfish.hk2.api.InjectionResolver;
+import org.glassfish.hk2.api.TypeLiteral;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
+
+import javax.inject.Singleton;
 
 import static com.hazelcast.core.Hazelcast.newHazelcastInstance;
 
@@ -38,14 +42,18 @@ public class HazelcastSessionBundle<T extends Configuration> implements Configur
 
     @Override
     public void run(T configuration, Environment environment) {
-        HazelcastSessionConfig hazelcastSessionConfig = getHazelcastSessionConfig(configuration);
-        environment.jersey().register(new HazelcastSessionFeature(hazelcastInstance, hazelcastSessionConfig));
+        final HazelcastSessionConfig hazelcastSessionConfig = getHazelcastSessionConfig(configuration);
         environment.jersey().register(new AbstractBinder() {
             @Override
             protected void configure() {
-                bindFactory(SessionFactory.class).to(Session.class);
+                bind(hazelcastInstance).to(HazelcastInstance.class);
+                bind(hazelcastSessionConfig).to(HazelcastSessionConfig.class);
+                bind(SessionObjectResolver.class)
+                        .to(new TypeLiteral<InjectionResolver<Session>>() {})
+                        .in(Singleton.class);
             }
         });
+        environment.jersey().register(SetSessionIdResponseFilter.class);
     }
 
     public HazelcastSessionConfig getHazelcastSessionConfig(T configuration) {
