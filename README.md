@@ -89,7 +89,7 @@ Assuming you have a UNIX terminal with git and maven installed:
 
 Now visit [http://localhost:8180/](http://localhost:8180/) and you should see "Hello, Somebody!". Wonderful. Now submit a name using the form and you should be greeted appropriately. Reload the page a few times and you'll see the name sticks, as it's being read from the session.
 
-To really appreciate the magic, however, you need to start a second instance of the server on another port (imagine these two nodes sitting behind a load balancer). When you do that Hazelcast will use spot the second instance over multicast and will casually create you a cluster of "Hello, Somebody!" services.
+To really appreciate the magic, however, you need to start a second instance of the server on another port (imagine these two nodes sitting behind a load balancer). When you do that Hazelcast will hook up with the second instance over multicast and will casually create you a cluster of "Hello, Somebody!" services.
 
 So open a second terminal window in the same directory:
   1. `cd dropwizard-hazelcast-session/example-app`
@@ -99,12 +99,12 @@ Now visit that second web app in a browser: [http://localhost:8280/](http://loca
 
 Next up, open `example-app/config/dw-hazelcast-example-dev-8180.yml` and `example-app/config/dw-hazelcast-example-dev-8280.yml` and change the value of `  sessionTimeoutSecs` to `10` (seconds). Restart both services. Now you'll see the session expire after 10 seconds.
 
-You can keep adding and removing nodes and Hazelcast will keep track of the cluster and moving the data around the nodes to ensure it will remain available if any node suddenly disappears.
+You can keep adding and removing nodes and Hazelcast will manage the cluster for you. Data will be transparently distributed across the nodes to ensure it will remain available if any node suddenly disappears.
 
 
 Why, oh why?
 ------------
 
-Obviously a RESTful service shouldn't rely on session state to do it's work, so why would you want need this? Well [Dropwizard Views](http://www.dropwizard.io/manual/views.html) offers a couple of great modules for building web applications using Dropwizard and those often do need some session state to be useful.
+Obviously a RESTful service shouldn't rely on session state to do it's work, so why would you want need this? Well [Dropwizard Views](http://www.dropwizard.io/manual/views.html) offers a couple of great modules for building web applications and those often do need some session state to be useful.
 
 `dropwizard-hazelcast-session` lets you quickly and easily add session state which is instantly replicated across a cluster of services.
