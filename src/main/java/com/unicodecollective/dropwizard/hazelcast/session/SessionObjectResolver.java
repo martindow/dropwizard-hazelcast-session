@@ -57,12 +57,15 @@ public class SessionObjectResolver implements InjectionResolver<Session> {
         requestContext.setProperty(SESSION_MAP_REQUEST_PROPERTY, thisSessionMap);
 
         Type requiredType = injectee.getRequiredType();
-        String requiredTypeName = requiredType.getTypeName();
+        if (!(requiredType instanceof Class)) {
+            throw new RuntimeException("Only class are supported by dropwizard-hazelcast-session - found: " + requiredType);
+        }
+        String requiredTypeName = ((Class) requiredType).getName();
         if (thisSessionMap.containsKey(requiredTypeName)) {
             return thisSessionMap.get(requiredTypeName);
         } else {
             try {
-                Object newInstance = Class.forName(requiredType.getTypeName()).newInstance();
+                Object newInstance = Class.forName(requiredTypeName).newInstance();
                 thisSessionMap.put(requiredTypeName, newInstance);
                 return newInstance;
             } catch (InstantiationException e) {
