@@ -12,7 +12,7 @@ Maven coordinates for the [latest release](https://repo1.maven.org/maven2/com/un
 <dependency>
     <groupId>com.unicodecollective.dropwizard</groupId>
     <artifactId>dropwizard-hazelcast-session</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 </dependency>
 ```
 
@@ -125,9 +125,27 @@ Next up, open `example-app/config/dw-hazelcast-example-dev-8180.yml` and `exampl
 You can keep adding and removing nodes and Hazelcast will manage the cluster for you. Data will be transparently distributed across the nodes to ensure it will remain available if any node suddenly disappears.
 
 
+
 Why, oh why?
 ------------
 
 Obviously a RESTful service shouldn't rely on session state to do it's work, so why would you want need this? Well [Dropwizard Views](http://www.dropwizard.io/manual/views.html) offers a couple of great modules for building web applications and those often do need some session state to be useful.
 
 `dropwizard-hazelcast-session` lets you quickly and easily add session state which is instantly replicated across a cluster of services.
+
+
+
+Releasing
+---------
+
+This project is released to the Sonatype OSS repository use Maven, the details of which are documented here:
+
+[http://central.sonatype.org/pages/apache-maven.html](http://central.sonatype.org/pages/apache-maven.html)
+
+- To release a snapshot version: `mvn deploy`
+- To release production version:
+  - Set the release version: `mvn versions:set -DnewVersion=1.0.2`
+  - Commit version change: `git commit -m "Setting the maven project version to xxx."`
+  - Deploy the release version: `mvn clean deploy -P release`
+  - Set the next snapshot version: `mvn versions:set -DnewVersion=1.0.2-SNAPSHOT`
+  - Commit the version change: `git commit -m "Setting the maven project version to xxx."`
