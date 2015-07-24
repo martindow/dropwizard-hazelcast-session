@@ -3,6 +3,8 @@ package com.unicodecollective.dropwizard.hazelcast.session;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import static javax.ws.rs.core.NewCookie.DEFAULT_MAX_AGE;
+
 public class HazelcastSessionConfig {
 
     @JsonProperty("sessionTimeoutSecs")
@@ -25,6 +27,9 @@ public class HazelcastSessionConfig {
 
     @JsonProperty("cookieHttpOnly")
     private boolean cookieHttpOnly = false;
+
+    @JsonProperty("cookieMaxAge")
+    private int cookieMaxAge = DEFAULT_MAX_AGE;
 
     public int getSessionTimeoutSecs() {
         return sessionTimeoutSecs;
@@ -53,4 +58,9 @@ public class HazelcastSessionConfig {
     public boolean isCookieHttpOnly() {
         return cookieHttpOnly;
     }
+
+    public int getCookieMaxAge() {
+        return cookieMaxAge;
+    }
+
 }
