@@ -7,7 +7,7 @@
     </prerequisites>
 
     <artifactId>dropwizard-hazelcast-session-example</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.3</version>
     <groupId>com.unicodecollective.dropwizard</groupId>
     <name>Dropwizard Hazelcast clustered session bundle example application.</name>
 
@@ -124,7 +124,7 @@
                                         implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.example.helloworld.HelloWorldApplication</mainClass>
+                                    <mainClass>com.unicodecollective.dropwizard.hazelcast.session.example.DwHazelcastExampleApplication</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

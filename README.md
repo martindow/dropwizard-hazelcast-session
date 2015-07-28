@@ -144,8 +144,10 @@ This project is released to the Sonatype OSS repository use Maven, the details o
 
 - To release a snapshot version: `mvn deploy`
 - To release production version:
-  - Set the release version: `mvn versions:set -DnewVersion=1.0.2`
+  - Set the release version: `mvn versions:set -DnewVersion=1.0.3`
+  - Set the release version of the example project: `cd example-app; mvn versions:set -DnewVersion=1.0.3; cd ..;`
   - Commit version change: `git commit -m "Setting the maven project version to xxx."`
   - Deploy the release version: `mvn clean deploy -P release`
-  - Set the next snapshot version: `mvn versions:set -DnewVersion=1.0.2-SNAPSHOT`
+  - Set the next snapshot version: `mvn versions:set -DnewVersion=1.0.4-SNAPSHOT`
+  - Set the next snapshot version of the example project: `cd example-app; mvn versions:set -DnewVersion=1.0.4-SNAPSHOT; cd ..;`
   - Commit the version change: `git commit -m "Setting the maven project version to xxx."`

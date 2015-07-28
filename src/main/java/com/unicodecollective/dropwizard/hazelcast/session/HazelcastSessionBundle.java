@@ -49,10 +49,12 @@ public class HazelcastSessionBundle<T extends Configuration> implements Configur
                 bind(hazelcastInstance).to(HazelcastInstance.class);
                 bind(hazelcastSessionConfig).to(HazelcastSessionConfig.class);
                 bind(SessionObjectResolver.class)
-                        .to(new TypeLiteral<InjectionResolver<Session>>() {})
+                        .to(new TypeLiteral<InjectionResolver<Session>>() {
+                        })
                         .in(Singleton.class);
             }
         });
+        environment.lifecycle().manage(new HazelcastInstanceManager(hazelcastInstance));
         environment.jersey().register(SetSessionIdResponseFilter.class);
     }
 
