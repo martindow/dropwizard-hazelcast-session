@@ -2,7 +2,9 @@ package com.unicodecollective.dropwizard.hazelcast.session;
 
 
 import com.hazelcast.config.Config;
+import com.hazelcast.config.MulticastConfig;
 import com.hazelcast.core.HazelcastInstance;
+import com.unicodecollective.dropwizard.hazelcast.session.config.HazelcastConfig;
 import com.unicodecollective.dropwizard.hazelcast.session.config.HazelcastSessionConfig;
 import io.dropwizard.Configuration;
 import io.dropwizard.ConfiguredBundle;
@@ -16,6 +18,7 @@ import javax.inject.Singleton;
 import java.util.Map;
 
 import static com.hazelcast.core.Hazelcast.newHazelcastInstance;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 public class HazelcastSessionBundle<T extends Configuration> implements ConfiguredBundle<T> {
 
@@ -28,9 +31,19 @@ public class HazelcastSessionBundle<T extends Configuration> implements Configur
     @Override
     public void run(T configuration, Environment environment) {
         final HazelcastSessionConfig hazelcastSessionConfig = getHazelcastSessionConfig(configuration);
+        HazelcastConfig hazelcastConfig = hazelcastSessionConfig.getHazelcastConfig();
         Config hcHazelcastConfig = new Config();
-        for (Map.Entry<String, String> hazelcastConfigProperty : hazelcastSessionConfig.getHazelcastConfig().entrySet()) {
+        for (Map.Entry<String, String> hazelcastConfigProperty : hazelcastConfig.getProperties().entrySet()) {
             hcHazelcastConfig.setProperty(hazelcastConfigProperty.getKey(), hazelcastConfigProperty.getValue());
+        }
+        MulticastConfig multicastConfig = hcHazelcastConfig.getNetworkConfig().getJoin().getMulticastConfig();
+        String multicastGroup = hazelcastConfig.getMulticastGroup();
+        if (isNotBlank(multicastGroup)) {
+            multicastConfig.setMulticastGroup(multicastGroup);
+        }
+        Integer multicastPort = hazelcastConfig.getMulticastPort();
+        if (multicastPort != null) {
+            multicastConfig.setMulticastPort(multicastPort);
         }
         final HazelcastInstance hazelcastInstance = newHazelcastInstance(hcHazelcastConfig);
         environment.jersey().register(new AbstractBinder() {

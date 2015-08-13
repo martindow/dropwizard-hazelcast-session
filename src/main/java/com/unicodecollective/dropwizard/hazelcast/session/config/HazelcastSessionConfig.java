@@ -15,7 +15,7 @@ public class HazelcastSessionConfig {
     private CookieConfig cookieConfig = new CookieConfig();
 
     @JsonProperty("hazelcast")
-    private Map<String, String> hazelcastConfig = new HashMap<>();
+    private HazelcastConfig hazelcastConfig;
 
     public int getSessionTimeoutSecs() {
         return sessionTimeoutSecs;
@@ -25,7 +25,7 @@ public class HazelcastSessionConfig {
         return cookieConfig;
     }
 
-    public Map<String, String> getHazelcastConfig() {
+    public HazelcastConfig getHazelcastConfig() {
         return hazelcastConfig;
     }
 
