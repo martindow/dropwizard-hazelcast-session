@@ -1,6 +1,7 @@
 package com.unicodecollective.dropwizard.hazelcast.session;
 
 import com.hazelcast.core.HazelcastInstance;
+import com.unicodecollective.dropwizard.hazelcast.session.config.HazelcastSessionConfig;
 import org.glassfish.hk2.api.Injectee;
 import org.glassfish.hk2.api.InjectionResolver;
 import org.glassfish.hk2.api.ServiceHandle;
@@ -40,7 +41,7 @@ public class SessionObjectResolver implements InjectionResolver<Session> {
         HashMap<Object, Object> thisSessionMap = null;
 
         String sessionId = null;
-        Cookie sessionCookie = requestContext.getCookies().get(config.getCookieName());
+        Cookie sessionCookie = requestContext.getCookies().get(config.getCookieConfig().getCookieName());
         if (sessionCookie != null) {
             sessionId = sessionCookie.getValue();
             if (isNotBlank(sessionId) && allSessionsMap.containsKey(sessionId)) {
@@ -58,13 +59,14 @@ public class SessionObjectResolver implements InjectionResolver<Session> {
 
         Type requiredType = injectee.getRequiredType();
         if (!(requiredType instanceof Class)) {
-            throw new RuntimeException("Only class are supported by dropwizard-hazelcast-session - found: " + requiredType);
+            throw new RuntimeException("Only class types are supported by dropwizard-hazelcast-session - found: " + requiredType);
         }
         String requiredTypeName = ((Class) requiredType).getName();
         if (thisSessionMap.containsKey(requiredTypeName)) {
             return thisSessionMap.get(requiredTypeName);
         } else {
             try {
+                // TODO: Accept a factory to construct the class?
                 Object newInstance = Class.forName(requiredTypeName).newInstance();
                 thisSessionMap.put(requiredTypeName, newInstance);
                 return newInstance;

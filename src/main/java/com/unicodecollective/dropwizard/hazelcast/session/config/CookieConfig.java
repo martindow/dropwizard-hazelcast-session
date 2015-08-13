@@ -1,39 +1,32 @@
-package com.unicodecollective.dropwizard.hazelcast.session;
+package com.unicodecollective.dropwizard.hazelcast.session.config;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import static javax.ws.rs.core.NewCookie.DEFAULT_MAX_AGE;
 
-public class HazelcastSessionConfig {
+public class CookieConfig {
 
-    @JsonProperty("sessionTimeoutSecs")
-    private int sessionTimeoutSecs = 15 * 60; // 15 minutes by default
-
-    @JsonProperty("cookieName")
+    @JsonProperty("name")
     private String cookieName = "dw-hc-session";
 
-    @JsonProperty("cookiePath")
+    @JsonProperty("path")
     private String cookiePath = null;
 
-    @JsonProperty("cookieDomain")
+    @JsonProperty("domain")
     private String cookieDomain = null;
 
-    @JsonProperty("cookieComment")
+    @JsonProperty("comment")
     private String cookieComment = null;
 
-    @JsonProperty("cookieSecure")
+    @JsonProperty("secure")
     private boolean cookieSecure = false;
 
-    @JsonProperty("cookieHttpOnly")
+    @JsonProperty("httpOnly")
     private boolean cookieHttpOnly = false;
 
-    @JsonProperty("cookieMaxAge")
+    @JsonProperty("maxAge")
     private int cookieMaxAge = DEFAULT_MAX_AGE;
-
-    public int getSessionTimeoutSecs() {
-        return sessionTimeoutSecs;
-    }
 
     public String getCookieName() {
         return cookieName;

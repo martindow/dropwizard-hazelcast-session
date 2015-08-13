@@ -2,7 +2,7 @@ package com.unicodecollective.dropwizard.hazelcast.session.example.config;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;
-import com.unicodecollective.dropwizard.hazelcast.session.HazelcastSessionConfig;
+import com.unicodecollective.dropwizard.hazelcast.session.config.HazelcastSessionConfig;
 
 import java.util.Map;
 
