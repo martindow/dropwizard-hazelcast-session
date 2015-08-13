@@ -75,11 +75,14 @@ import technology.zook.dropwizard.hazelcast.session.Session;
 public class MyResource {
 
     @Session
-    private String thingy;
+    private MySessionObject mySessionObject;
+    
+    @Session
+    private AnotherSessionObject anotherSessionObject;
     
     @GET
     public String getSomething() {
-        return thingy;
+        return mySessionObject.getOne() + anotherSessionObject.getTwo();
     }
 }
 ```
