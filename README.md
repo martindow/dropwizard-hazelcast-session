@@ -12,7 +12,7 @@ Maven coordinates for the [latest release](https://repo1.maven.org/maven2/com/un
 <dependency>
     <groupId>com.unicodecollective.dropwizard</groupId>
     <artifactId>dropwizard-hazelcast-session</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.4</version>
 </dependency>
 ```
 
@@ -146,8 +146,8 @@ This project is released to the Sonatype OSS repository use Maven, the details o
 - To release production version:
   - Set the release version: `mvn versions:set -DnewVersion=1.0.3`
   - Set the release version of the example project: `cd example-app; mvn versions:set -DnewVersion=1.0.3; cd ..;`
-  - Commit version change: `git commit -m "Setting the maven project version to xxx."`
+  - Commit version change: `git add -A .; git commit -m "Setting the maven project version to xxx."`
   - Deploy the release version: `mvn clean deploy -P release`
   - Set the next snapshot version: `mvn versions:set -DnewVersion=1.0.4-SNAPSHOT`
   - Set the next snapshot version of the example project: `cd example-app; mvn versions:set -DnewVersion=1.0.4-SNAPSHOT; cd ..;`
-  - Commit the version change: `git commit -m "Setting the maven project version to xxx."`
+  - Commit the version change: `git add -A .; git commit -m "Setting the maven project version to xxx."`
