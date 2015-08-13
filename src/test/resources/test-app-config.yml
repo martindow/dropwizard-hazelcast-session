@@ -1,0 +1,15 @@
+server:
+  applicationConnectors:
+    - type: http
+      port: 8745
+
+hazelcastSession:
+  sessionTimeoutSecs: 900
+  cookie:
+    name: testapp-session
+  hazelcast:
+    multicastGroup: 224.2.2.3
+    multicastPort: 54328
+    properties:
+      "hazelcast.io.thread.count": "1"
+      "hazelcast.event.thread.count": "1"
