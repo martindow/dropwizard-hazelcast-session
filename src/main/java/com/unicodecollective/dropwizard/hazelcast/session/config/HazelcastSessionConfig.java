@@ -15,7 +15,7 @@ public class HazelcastSessionConfig {
     private CookieConfig cookieConfig = new CookieConfig();
 
     @JsonProperty("hazelcast")
-    private HazelcastConfig hazelcastConfig;
+    private HazelcastConfig hazelcastConfig = new HazelcastConfig();
 
     public int getSessionTimeoutSecs() {
         return sessionTimeoutSecs;
