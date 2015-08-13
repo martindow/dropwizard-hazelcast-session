@@ -12,7 +12,7 @@ Maven coordinates for the [latest release](https://repo1.maven.org/maven2/com/un
 <dependency>
     <groupId>com.unicodecollective.dropwizard</groupId>
     <artifactId>dropwizard-hazelcast-session</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
 </dependency>
 ```
 
