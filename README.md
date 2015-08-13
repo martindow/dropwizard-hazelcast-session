@@ -38,7 +38,14 @@ Most of the configs are optional, but you might want to set these in your YML co
 ```yml
 hazelcastSessionConfig:
   sessionTimeoutSecs: 900
-  cookieName: myapp-session
+  cookie:
+    name: myapp-session
+  hazelcast:
+    multicastGroup: 224.2.2.3
+    multicastPort: 54328
+    properties:
+      "hazelcast.io.thread.count": "1"
+      "hazelcast.event.thread.count": "1"
 ```
 
 Add a `HazelcastSessionBundle` to your bootstrap during initialisation:
