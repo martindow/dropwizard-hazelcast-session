@@ -26,7 +26,7 @@ public class HazelcastSessionBundleTest {
 
     @Test
     public void setAndGet() {
-        Response response = getThing(null);
+        Response response = getThing();
         NewCookie sessionCookie = response.getCookies().get("testapp-session");
         assertEquals("", response.readEntity(String.class));
         String sessionThing = "My session thing!";
@@ -40,6 +40,10 @@ public class HazelcastSessionBundleTest {
                 .request()
                 .cookie(sessionCookie)
                 .post(Entity.text(""));
+    }
+
+    private Response getThing() {
+        return getThing(null);
     }
 
     private Response getThing(NewCookie sessionCookie) {

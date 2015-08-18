@@ -38,24 +38,29 @@ public class SessionObjectResolver implements InjectionResolver<Session> {
         ContainerRequestContext requestContext = serviceLocator.getService(ContainerRequestContext.class);
 
         Map<Object, Object> allSessionsMap = hazelcastInstance.getMap(HAZELCAST_SESSIONS_MAP_KEY);
-        HashMap<Object, Object> thisSessionMap = null;
+        HashMap<Object, Object> thisSessionMap = (HashMap<Object, Object>) requestContext.getProperty(SESSION_MAP_REQUEST_PROPERTY);
 
-        String sessionId = null;
-        Cookie sessionCookie = requestContext.getCookies().get(config.getCookieConfig().getCookieName());
-        if (sessionCookie != null) {
-            sessionId = sessionCookie.getValue();
-            if (isNotBlank(sessionId) && allSessionsMap.containsKey(sessionId)) {
-                thisSessionMap = (HashMap) allSessionsMap.get(sessionId);
+        String sessionId = (String) requestContext.getProperty(SESSION_ID_REQUEST_PROPERTY);
+        if (sessionId == null) {
+            Cookie sessionCookie = requestContext.getCookies().get(config.getCookieConfig().getCookieName());
+            if (sessionCookie != null) {
+                sessionId = sessionCookie.getValue();
+                if (isNotBlank(sessionId) && allSessionsMap.containsKey(sessionId)) {
+                    thisSessionMap = (HashMap) allSessionsMap.get(sessionId);
+                }
+            } else {
+                sessionId = randomUUID().toString();
+                requestContext.setProperty(NEW_SESSION_ID_SET_REQUEST_PROPERTY, sessionId);
             }
+            requestContext.setProperty(SESSION_ID_REQUEST_PROPERTY, sessionId);
         }
         if (thisSessionMap == null) {
-            sessionId = randomUUID().toString();
-            requestContext.setProperty(NEW_SESSION_ID_SET_REQUEST_PROPERTY, sessionId);
             thisSessionMap = new HashMap<>();
             allSessionsMap.put(sessionId, thisSessionMap);
         }
-        requestContext.setProperty(SESSION_ID_REQUEST_PROPERTY, sessionId);
-        requestContext.setProperty(SESSION_MAP_REQUEST_PROPERTY, thisSessionMap);
+        if (requestContext.getProperty(SESSION_MAP_REQUEST_PROPERTY) == null && thisSessionMap != null) {
+            requestContext.setProperty(SESSION_MAP_REQUEST_PROPERTY, thisSessionMap);
+        }
 
         Type requiredType = injectee.getRequiredType();
         if (!(requiredType instanceof Class)) {
