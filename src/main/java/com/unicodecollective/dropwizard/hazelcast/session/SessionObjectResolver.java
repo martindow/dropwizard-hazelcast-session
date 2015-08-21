@@ -1,6 +1,5 @@
 package com.unicodecollective.dropwizard.hazelcast.session;
 
-import com.hazelcast.core.HazelcastInstance;
 import com.unicodecollective.dropwizard.hazelcast.session.config.HazelcastSessionConfig;
 import org.glassfish.hk2.api.Injectee;
 import org.glassfish.hk2.api.InjectionResolver;
@@ -22,7 +21,6 @@ public class SessionObjectResolver implements InjectionResolver<Session> {
     public static final String SESSION_MAP_REQUEST_PROPERTY = SessionObjectResolver.class.getCanonicalName() + ".session-map";
     public static final String SESSION_ID_REQUEST_PROPERTY = SessionObjectResolver.class.getCanonicalName() + ".new-session-id";
     public static final String NEW_SESSION_ID_SET_REQUEST_PROPERTY = SessionObjectResolver.class.getCanonicalName() + ".new-session-id-set";
-    public static final String HAZELCAST_SESSIONS_MAP_KEY = SessionObjectResolver.class.getCanonicalName() + "SetSessionIdResponseFilter.class.getCanonicalName() + .sessions";
 
     @Inject
     private ServiceLocator serviceLocator;
@@ -31,13 +29,13 @@ public class SessionObjectResolver implements InjectionResolver<Session> {
     private HazelcastSessionConfig config;
 
     @Inject
-    private HazelcastInstance hazelcastInstance;
+    private SessionsStore sessionsStore;
 
     @Override
     public Object resolve(Injectee injectee, ServiceHandle<?> handle) {
         ContainerRequestContext requestContext = serviceLocator.getService(ContainerRequestContext.class);
 
-        Map<Object, Object> allSessionsMap = hazelcastInstance.getMap(HAZELCAST_SESSIONS_MAP_KEY);
+        Map<Object, Object> allSessionsMap = sessionsStore.get();
         HashMap<Object, Object> thisSessionMap = (HashMap<Object, Object>) requestContext.getProperty(SESSION_MAP_REQUEST_PROPERTY);
 
         String sessionId = (String) requestContext.getProperty(SESSION_ID_REQUEST_PROPERTY);

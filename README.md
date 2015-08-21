@@ -37,6 +37,9 @@ public class MyAppConfiguration extends Configuration {
 Most of the configs are optional, but you might want to set these in your YML config file:
 ```yml
 hazelcastSessionConfig:
+  # Default is HazelcastSessionsStoreFactory
+  # sessionsStoreFactory: com.unicodecollective.dropwizard.hazelcast.session.HazelcastSessionsStoreFactory
+  # sessionsStoreFactory: com.unicodecollective.dropwizard.hazelcast.session.InMemorySessionsStoreFactory
   sessionTimeoutSecs: 900
   cookie:
     name: myapp-session

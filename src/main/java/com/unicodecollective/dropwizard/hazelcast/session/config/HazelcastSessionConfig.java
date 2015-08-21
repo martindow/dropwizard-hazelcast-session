@@ -2,9 +2,9 @@ package com.unicodecollective.dropwizard.hazelcast.session.config;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.unicodecollective.dropwizard.hazelcast.session.HazelcastSessionsStoreFactory;
+import com.unicodecollective.dropwizard.hazelcast.session.SessionsStore;
+import org.glassfish.hk2.api.Factory;
 
 public class HazelcastSessionConfig {
 
@@ -17,12 +17,19 @@ public class HazelcastSessionConfig {
     @JsonProperty("hazelcast")
     private HazelcastConfig hazelcastConfig = new HazelcastConfig();
 
+    @JsonProperty("sessionsStoreFactory")
+    private Class<? extends Factory<SessionsStore>> sessionsStoreFactoryClass = HazelcastSessionsStoreFactory.class;
+
     public int getSessionTimeoutSecs() {
         return sessionTimeoutSecs;
     }
 
     public CookieConfig getCookieConfig() {
         return cookieConfig;
+    }
+
+    public Class<? extends Factory<SessionsStore>> getSessionsStoreFactoryClass() {
+        return sessionsStoreFactoryClass;
     }
 
     public HazelcastConfig getHazelcastConfig() {

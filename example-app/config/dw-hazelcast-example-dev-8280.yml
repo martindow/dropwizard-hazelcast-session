@@ -7,8 +7,12 @@ server:
       port: 8281
 
 hazelcastSessionConfig:
+  # Default is HazelcastSessionsStoreFactory
+  # sessionsStoreFactory: com.unicodecollective.dropwizard.hazelcast.session.HazelcastSessionsStoreFactory
+  # sessionsStoreFactory: com.unicodecollective.dropwizard.hazelcast.session.InMemorySessionsStoreFactory
   sessionTimeoutSecs: 600
-  cookieName: example-session
+  cookie:
+    name: example-session
 
 views:
   .ftl:

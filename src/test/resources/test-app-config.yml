@@ -4,6 +4,9 @@ server:
       port: 8745
 
 hazelcastSession:
+  # Default is HazelcastSessionsStoreFactory
+  # sessionsStoreFactory: com.unicodecollective.dropwizard.hazelcast.session.HazelcastSessionsStoreFactory
+  # sessionsStoreFactory: com.unicodecollective.dropwizard.hazelcast.session.InMemorySessionsStoreFactory
   sessionTimeoutSecs: 900
   cookie:
     name: testapp-session

@@ -1,7 +1,6 @@
 package com.unicodecollective.dropwizard.hazelcast.session;
 
 
-import com.hazelcast.core.HazelcastInstance;
 import com.unicodecollective.dropwizard.hazelcast.session.config.CookieConfig;
 import com.unicodecollective.dropwizard.hazelcast.session.config.HazelcastSessionConfig;
 
@@ -21,7 +20,7 @@ public class SetSessionIdResponseFilter implements ContainerResponseFilter {
     private HazelcastSessionConfig config;
 
     @Inject
-    private HazelcastInstance hazelcastInstance;
+    private SessionsStore sessionsStore;
 
     @Override
     public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws IOException {
@@ -34,7 +33,7 @@ public class SetSessionIdResponseFilter implements ContainerResponseFilter {
                         cookieConfig.getCookieMaxAge(), cookieConfig.isCookieSecure(), cookieConfig.isCookieHttpOnly());
                 responseContext.getHeaders().add("Set-Cookie", newSessionCookie);
             }
-            hazelcastInstance.getMap(HAZELCAST_SESSIONS_MAP_KEY).put(sessionId, requestContext.getProperty(SESSION_MAP_REQUEST_PROPERTY));
+            sessionsStore.get().put(sessionId, requestContext.getProperty(SESSION_MAP_REQUEST_PROPERTY));
         }
     }
 
